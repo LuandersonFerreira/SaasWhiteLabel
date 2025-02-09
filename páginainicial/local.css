@@ -1,0 +1,35 @@
+body{
+  background-color: azure;
+  max-width: 500px;
+  margin: 0 auto;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1{
+  font-size: 40px;
+  color:rgba(233, 172, 80, 0.94);
+  text-align: center;
+}
+
+input{
+    height: 35px;
+    border: 2px solid rgb(233, 172, 80, 0.94);
+    background-color: azure;
+    color: #000;
+    outline: none;
+    width: 60%;
+}
+
+
+li{
+    background-color: rgba(218, 154, 59, 0.94);
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 5px;
+    color:azure;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
