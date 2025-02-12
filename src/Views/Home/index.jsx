@@ -1,14 +1,12 @@
 import { Title } from "./styles"
 import Button from '../../components/Button'
 
-function Home (){
+export default function Home (){
     
     return (
         <div>
-            <Title>Landing page</Title>
+            <Title>Home page</Title>
             <Button></Button>
         </div>
     )
 }
-
-export default Home
