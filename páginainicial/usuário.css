@@ -1,0 +1,74 @@
+body {
+    background-color: azure;
+    max-width: 500px;
+    margin: 0 auto;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center; 
+}
+
+h1 {
+    font-size: 40px;
+    color: rgba(233, 172, 80, 0.94);
+    text-align: center;
+}
+h4{
+    font-size: 15px;
+    color:rgba(233, 172, 80, 0.94);
+    text-align: center;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; 
+    width: 100%;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; 
+    width: 100%;
+    max-width: 400px; 
+}
+
+input {
+    height: 40px;
+    border: 2px solid rgba(233, 172, 80, 0.94);
+    background-color: azure;
+    color: #000;
+    outline: none;
+    width: 70%; 
+    padding: 5px;
+    border-radius: 5px; 
+    text-align: center;
+}
+.empty-space {
+    width: 30%;
+    height: 40px;
+}
+
+button {
+    border: none;
+    height: 40px;
+    background-color: rgba(233, 172, 80, 0.94);
+    color: azure;
+    cursor: pointer;
+    transition: 0.5s;
+    width: 30%;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+button:hover {
+    background-color: rgba(255, 186, 82, 0.94);
+}
+
+button:active { 
+    background-color: rgba(255, 196, 107, 0.94);
+}
