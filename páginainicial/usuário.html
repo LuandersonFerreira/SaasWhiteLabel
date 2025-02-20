@@ -1,11 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do Usuário</title>
+    <link rel="stylesheet" href="usuário.css">
+    <title>Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Criar página de perfil</h1>
+    <h1>Tela de Login</h1>
+    
+    <form class="form-container">
+        <div class="input-group">
+            <input type="text" name="email" placeholder="Insira seu email...">
+            <button type="button" onclick="enviarCodigo()">
+                <i class="fa-solid fa-paper-plane"></i> Enviar Código
+            </button>
+        </div>
+
+        <div class="input-group">
+            <input type="text" name="codigo" placeholder="Insira seu código de verificação">
+            <button type="button" onclick="Continuar()">Continuar</button>
+        </div>
+    </form>
+
+    <h4>Reenvir código de verificação</h4>
 </body>
 </html>
