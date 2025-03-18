@@ -10,20 +10,58 @@
 <body>
     <h1>Tela de Login</h1>
     
-    <form class="form-container">
+    <form class="form-container" onsubmit="return false;">
         <div class="input-group">
-            <input type="text" name="email" placeholder="Insira seu email...">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" class="input required" placeholder="Insira seu email..." required>
             <button type="button" onclick="enviarCodigo()">
                 <i class="fa-solid fa-paper-plane"></i> Enviar Código
             </button>
         </div>
 
         <div class="input-group">
-            <input type="text" name="codigo" placeholder="Insira seu código de verificação">
-            <button type="button" onclick="Continuar()">Continuar</button>
+            <label for="codigo">Código de verificação:</label>
+            <input type="text" id="codigo" name="codigo" class="input required" placeholder="Insira seu código de verificação" required>
+            <button type="button" onclick="continuar()">Continuar</button>
         </div>
     </form>
 
-    <h4>Reenvir código de verificação</h4>
+    <h4 onclick="reenviarCodigo()" style="cursor: pointer; color: blue;">Reenviar código de verificação</h4>
+
+    <script>
+        async function enviarCodigo() {
+            const email = document.getElementById('email').value;
+            if (!email) {
+                alert("Por favor, insira um email válido.");
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/enviar-codigo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+                alert(data.mensagem);
+            } catch (error) {
+                alert("Erro ao enviar código. Tente novamente.");
+            }
+        }
+
+        function reenviarCodigo() {
+            enviarCodigo();
+        }
+
+        function continuar() {
+            const codigo = document.getElementById('codigo').value;
+            if (codigo) {
+                alert("Código verificado com sucesso!");
+            } else {
+                alert("Por favor, insira o código de verificação.");
+            }
+        }
+    </script>
 </body>
 </html>
