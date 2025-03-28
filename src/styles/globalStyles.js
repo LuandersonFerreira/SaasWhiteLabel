@@ -1,19 +1,15 @@
 import { createGlobalStyle } from "styled-components";
 
-const MyGlobalStyles = createGlobalStyle`
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+export const GlobalStyles = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    body {
-        background-color: blue;
-    }
-
-    p {
-        font-size: 20px;
-    }
+  body {
+    background: ${({ theme }) => theme.background};
+    color: ${({ theme }) => theme.text};
+    font-family: Arial, sans-serif;
+  }
 `;
-
-export default MyGlobalStyles;
