@@ -8,7 +8,11 @@ const HeaderCustom = ({ isSmallScreen, location }) => {
     { key: "1", label: <a href="#">Alterar Conta</a>, icon: <EditOutlined /> },
     {
       key: "2",
-      label: <a href="#">Sair</a>,
+      label: (
+        <a href="#" onClick={() => console.log()}>
+          Sair
+        </a>
+      ),
       icon: <SmileOutlined />,
     },
   ];

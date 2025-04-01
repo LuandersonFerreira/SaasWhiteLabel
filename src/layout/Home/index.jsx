@@ -56,32 +56,17 @@ const HomeLayout = () => {
   const [collapsed, setCollapsed] = useState(isSmallScreen ? true : false);
   const [selectedKey, setSelectedKey] = useState("");
 
+  const handleSignOut = () => {};
+
   const dropdownItems = [
     {
       key: "1",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.antgroup.com"
-        >
-          Alterar Conta
-        </a>
-      ),
+      label: <a>Alterar Conta</a>,
     },
     {
       key: "2",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.aliyun.com"
-        >
-          Sair
-        </a>
-      ),
+      label: <a onClick={handleSignOut}>Sair</a>,
       icon: <SmileOutlined />,
-      disabled: true,
     },
   ];
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { mockInvite } from "../mock/invite";
+import api from "./api";
 
 export const useInvite = (inviteId, useMock = false) => {
   const [invite, setInvite] = useState(null);
@@ -15,7 +15,7 @@ export const useInvite = (inviteId, useMock = false) => {
         setLoading(true);
         const response = useMock
           ? mockInvite
-          : await axios.get(`/api/invites/${inviteId}`);
+          : await api.get(`/api/invites/${inviteId}`);
         setInvite(response.data);
       } catch (err) {
         setError(err.message || "Erro ao buscar convite");

@@ -17,7 +17,7 @@ const InviteForm = ({ invite }) => {
   };
 
   return (
-    <StyledForm form={form} layout="vertical" onFinish={onFinish}>
+    <StyledForm form={form} layout="vertical" onFinish={onFinish} size="large">
       <h1 style={{ fontSize: "24px", textAlign: "center" }}>{invite.name}</h1>
       <p
         style={{ fontSize: "18px", textAlign: "center", marginBottom: "24px" }}

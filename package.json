@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "antd": "^5.24.1",
+    "axios": "^1.8.4",
     "dayjs": "^1.11.13",
+    "extract-colors": "^4.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-responsive": "^10.0.1",
