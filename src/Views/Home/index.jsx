@@ -11,7 +11,7 @@ export default function Home() {
   }, [fetchEvents]);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 30 }}>
       <div>{events.length > 0 && <Highlight />}</div>
       <Events />
     </div>

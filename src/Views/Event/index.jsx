@@ -1,34 +1,27 @@
-import { Typography } from "antd";
-import {
-  Banner,
-  Container,
-  StyledCard,
-  InfoText,
-  Section,
-  CountdownContainer,
-  GradientOverlay,
-} from "./style";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { extractColorsFromImage } from "../../utils/extractColors";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import { CountdownBox, EventInfo, StyledContainer } from "./style";
+import { Typography } from "antd";
+import { useThemeStore } from "../../store/themeStore";
 
 dayjs.extend(duration);
 
 const { Title, Text } = Typography;
 
-export default function Event() {
+export default function EventPage() {
   const { state: event } = useLocation();
-  const [colors, setColors] = useState(["#1890ff", "#52c41a"]);
+  const setGradientColors = useThemeStore((state) => state.setGradientColors);
   const [timeLeft, setTimeLeft] = useState(getTimeLeft(event.date));
   const [eventPassed, setEventPassed] = useState(false);
 
   useEffect(() => {
     if (event.photo) {
-      extractColorsFromImage(event.photo).then(setColors);
+      extractColorsFromImage(event.photo).then(setGradientColors);
     }
-  }, [event.photo]);
+  }, [event.photo, setGradientColors]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -61,54 +54,25 @@ export default function Event() {
   }
 
   return (
-    <Container colors={colors}>
-      <Banner imageUrl={event.photo}>
-        <GradientOverlay colors={colors} />
-        <CountdownContainer>
-          {eventPassed ? (
-            <Title level={2} style={{ color: "white" }}>
-              Evento encerrado
-            </Title>
-          ) : (
-            <>
-              <Title level={2} style={{ color: "white", marginBottom: 0 }}>
-                Countdown to Event
-              </Title>
-              <div style={{ display: "flex", gap: "20px", marginTop: "10px" }}>
-                {["days", "hours", "minutes", "seconds"].map((unit) => (
-                  <div key={unit}>
-                    <Text strong style={{ fontSize: "2rem", color: "white" }}>
-                      {String(timeLeft[unit]).padStart(2, "0")}
-                    </Text>
-                    <Text style={{ color: "white", display: "block" }}>
-                      {unit.charAt(0).toUpperCase() + unit.slice(1)}
-                    </Text>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </CountdownContainer>
-      </Banner>
-      <StyledCard>
-        <Title level={2} style={{ textAlign: "center", marginBottom: 20 }}>
-          {event.name}
-        </Title>
-        <Section>
-          <InfoText>
-            <Text strong>Data: </Text>
-            <Text>{dayjs(event.date).format("DD/MM/YYYY HH:mm:ss")}</Text>
-          </InfoText>
-          <InfoText>
-            <Text strong>Endereço: </Text>
-            <Text>{event.address}</Text>
-          </InfoText>
-          <InfoText>
-            <Text strong>Máximo de convidados: </Text>
-            <Text>{event.maxGuests}</Text>
-          </InfoText>
-        </Section>
-      </StyledCard>
-    </Container>
+    <StyledContainer>
+      <CountdownBox>
+        <Title level={2}>{event.name}</Title>
+        {eventPassed ? (
+          <Text type="danger">O evento já aconteceu!</Text>
+        ) : (
+          <div className="countdown">
+            <Text>{timeLeft.days}d</Text>
+            <Text>{timeLeft.hours}h</Text>
+            <Text>{timeLeft.minutes}m</Text>
+            <Text>{timeLeft.seconds}s</Text>
+          </div>
+        )}
+      </CountdownBox>
+      <EventInfo>
+        <Text strong>Local:</Text> <Text>{event.address}</Text>
+        <br />
+        <Text strong>Capacidade:</Text> <Text>{event.maxGuests} pessoas</Text>
+      </EventInfo>
+    </StyledContainer>
   );
 }

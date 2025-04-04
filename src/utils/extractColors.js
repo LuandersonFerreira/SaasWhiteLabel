@@ -11,9 +11,16 @@ export const extractColorsFromImage = async (imageUrl) => {
       crossOrigin: "anonymous",
     });
 
+    console.log(colors, "colors");
+
     if (colors && colors.length >= 2) {
       const sortedColors = [...colors].sort((a, b) => b.area - a.area);
-      return [sortedColors[0].hex, sortedColors[1].hex];
+      return [
+        sortedColors[0].hex,
+        sortedColors[1].hex,
+        sortedColors[2].hex,
+        sortedColors[3].hex,
+      ];
     }
 
     return ["#fff", "#fff"];
