@@ -1,9 +1,9 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Home from "./Views/Home/index.jsx";
-import Login from "./Views/Login/index.jsx";
 import CreateInvite from "./Views/CreateInvite/index.jsx";
 import Invite from "./Views/Invite/index.jsx";
 import HomeLayout from "./layout/Home/index.jsx";
+import Login from "./Views/Login/Login.jsx";
 
 const RouteConfig = () => {
   return (
