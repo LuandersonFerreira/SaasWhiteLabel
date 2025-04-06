@@ -28,6 +28,7 @@ export default function CreateInvite() {
           name: "Novo Convite",
           description: "Descrição do convite",
         }}
+        size="large"
       >
         <Header />
         <InviteForm />
