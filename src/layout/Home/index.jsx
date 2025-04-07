@@ -15,7 +15,7 @@ import {
   Menu,
   Space,
 } from "antd";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { useThemeStore } from "../../store/themeStore";
 import styled from "styled-components";
@@ -38,14 +38,8 @@ const menuItems = [
   {
     key: "1",
     icon: <UserOutlined />,
-    label: "Criar convite",
-    href: "/Event/Create-invite",
-  },
-  {
-    key: "2",
-    icon: <UserOutlined />,
-    label: "Responder convite",
-    href: "/invite/riks",
+    label: "HomePage",
+    href: "/",
   },
 ];
 
@@ -59,7 +53,9 @@ const StyledLayout = styled(Layout)`
 
 const HomeLayout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isSmallScreen = useMediaQuery({ maxWidth: 768 });
+  const { setGradientColors, gradientColors } = useThemeStore((state) => state);
 
   const [collapsed, setCollapsed] = useState(isSmallScreen ? true : false);
   const [selectedKey, setSelectedKey] = useState("");
@@ -92,9 +88,14 @@ const HomeLayout = () => {
       (item) => item.href === location.pathname
     );
     setSelectedKey(matchedItem ? matchedItem.key : "");
+
+    // se não estiver em rota de evento, seta o gradiente padrão
+    const isEventPage = location.pathname.startsWith("/Event/");
+    if (!isEventPage) {
+      setGradientColors(["#1a1a1a", "#333333", "#666666"]);
+    }
   }, [location.pathname]);
 
-  const gradientColors = useThemeStore((state) => state.gradientColors);
   const bodyBg = "background: rgba(255, 255, 255, 0)";
 
   return (
@@ -103,6 +104,11 @@ const HomeLayout = () => {
         components: {
           Layout: {
             bodyBg,
+          },
+          Breadcrumb: {
+            linkColor: "#fff",
+            separatorColor: "#fff",
+            linkHoverColor: "rgba(255,255,255,0.5)",
           },
         },
       }}
@@ -144,7 +150,7 @@ const HomeLayout = () => {
               items={menuItems.map((item) => ({
                 key: item.key,
                 icon: item.icon,
-                label: <a href={item.href}>{item.label}</a>,
+                label: <a onClick={() => navigate(item.href)}>{item.label}</a>,
               }))}
             />
           </Sider>
@@ -172,8 +178,7 @@ const HomeLayout = () => {
               />
               <Breadcrumb
                 items={breadcrumbItems.map(({ title, path }) => ({
-                  title,
-                  href: path,
+                  title: <a onClick={() => navigate(path)}>{title}</a>,
                 }))}
               />
               <Dropdown menu={{ items: dropdownItems }}>
@@ -198,6 +203,7 @@ const HomeLayout = () => {
               style={{
                 textAlign: "center",
                 background: "rgba(0, 0, 0, 0)",
+                color: "#fff",
               }}
             >
               InviteMe ©{new Date().getFullYear()} Created by NeoDigital

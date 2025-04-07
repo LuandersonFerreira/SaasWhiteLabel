@@ -1,6 +1,6 @@
 import { Form, Radio, Checkbox, Select } from "antd";
 import PropTypes from "prop-types";
-import { mockInvite } from "../../mock/invite";
+import { mockInvite } from "../../../../mock/invite.js";
 import {
   StyledButton,
   StyledForm,
@@ -83,6 +83,6 @@ InviteForm.propTypes = {
   }).isRequired,
 };
 
-export default function InvitePage() {
+export default function AnswerInvite() {
   return <InviteForm invite={mockInvite} />;
 }

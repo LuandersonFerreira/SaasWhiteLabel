@@ -1,12 +1,13 @@
 import { Button } from "antd";
-import { useEvents } from "../../../hook/useEvent";
+import { useHomeEvents } from "../../../hook/useHomeEvents";
 import { useNavigate } from "react-router-dom";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { useRef, useState } from "react";
+import { slugify } from "../../../utils/slugify";
 
 export default function CarouselEvents() {
-  const { events, loading } = useEvents(true);
+  const { events, loading } = useHomeEvents(true);
   const navigate = useNavigate();
   const scrollRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -71,7 +72,7 @@ export default function CarouselEvents() {
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
           >
-            {[...events, ...events].map((event) => (
+            {events.map((event) => (
               <EventCard key={event.id} background={event.photo}>
                 <EventContent>
                   <h1>{event.name}</h1>
@@ -80,9 +81,7 @@ export default function CarouselEvents() {
                   <h4>Máx. Convidados: {event.maxGuests}</h4>
                   <Button
                     ghost
-                    onClick={() =>
-                      navigate(`/Event/${event.id}`, { state: event })
-                    }
+                    onClick={() => navigate(`/Event/${slugify(event.name)}`)}
                   >
                     Detalhes
                   </Button>
@@ -205,37 +204,4 @@ const ArrowButton = styled.button`
   &:hover {
     background: rgba(0, 0, 0, 0.8);
   }
-`;
-
-/* Degradê lateral para sumir suavemente */
-const GradientLeft = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100px; /* Aumenta a largura para um efeito mais suave */
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(0, 0, 0, 0.2) 50%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 2;
-`;
-
-const GradientRight = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100px; /* Aumenta a largura para um efeito mais suave */
-  height: 100%;
-  background: linear-gradient(
-    to left,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(0, 0, 0, 0.2) 50%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 2;
 `;

@@ -1,23 +1,64 @@
 import styled from "styled-components";
 
+export const FullScreenLoader = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const StyledContainer = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
+`;
+
+export const Header = styled.div`
+  width: 100%;
+  height: 300px;
+  background-image: url(${(props) => props.backgroundImage});
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
   justify-content: center;
-  transition: background 0.5s ease-in-out;
-  z-index: -1;
+  align-items: center;
+`;
+
+export const Overlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 export const CountdownBox = styled.div`
-  background: rgba(255, 255, 255, 0.2);
-  padding: 20px;
-  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+
+  .countdown {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  span {
+    font-size: 18px;
+  }
 `;
 
-export const EventInfo = styled.div`
-  margin-top: 20px;
-  text-align: center;
+export const EventInfoCard = styled.div`
+  background: #fff;
+  padding: 24px;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+`;
+
+export const ConfirmGuestsSection = styled.div`
+  display: flex;
+  gap: 10px;
 `;

@@ -19,10 +19,41 @@ export const mockEvents = [
   {
     id: "3",
     name: "Conferência JavaScript",
-    photo:
-      "https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    photo: "https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg",
     date: "2025-12-31T23:59:59",
     address: "Av. Copacabana, 789 - Rio de Janeiro, RJ",
     maxGuests: 300,
+  },
+  {
+    id: "4",
+    name: "Feira de Tecnologia",
+    photo: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg",
+    date: "2025-11-20T20:00:00",
+    address: "Av. Inovações, 321 - Curitiba, PR",
+    maxGuests: 250,
+  },
+  {
+    id: "5",
+    name: "Meetup UX/UI",
+    photo: "https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg",
+    date: "2025-08-05T18:30:00",
+    address: "Praça Design, 78 - Porto Alegre, RS",
+    maxGuests: 120,
+  },
+  {
+    id: "6",
+    name: "Summit de Inteligência Artificial",
+    photo: "https://images.pexels.com/photos/218863/pexels-photo-218863.jpeg",
+    date: "2025-10-10T09:00:00",
+    address: "Centro de Convenções, 500 - Recife, PE",
+    maxGuests: 400,
+  },
+  {
+    id: "7",
+    name: "Hackathon Brasil",
+    photo: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg",
+    date: "2025-07-22T10:00:00",
+    address: "Espaço Criativo, 101 - Florianópolis, SC",
+    maxGuests: 180,
   },
 ];

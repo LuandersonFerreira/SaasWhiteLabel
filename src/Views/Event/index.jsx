@@ -1,37 +1,50 @@
-import { useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { extractColorsFromImage } from "../../utils/extractColors";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-import { CountdownBox, EventInfo, StyledContainer } from "./style";
-import { Typography } from "antd";
+import {
+  StyledContainer,
+  Header,
+  Overlay,
+  CountdownBox,
+  EventInfoCard,
+  ConfirmGuestsSection,
+  FullScreenLoader,
+} from "./style";
+import { Typography, Button, Spin } from "antd";
 import { useThemeStore } from "../../store/themeStore";
+import { useEvents } from "../../hook/useEvents";
 
 dayjs.extend(duration);
 
 const { Title, Text } = Typography;
 
 export default function EventPage() {
-  const { state: event } = useLocation();
+  const { eventName } = useParams();
+  const navigate = useNavigate();
+  const { event, loading } = useEvents(eventName, true);
+
   const setGradientColors = useThemeStore((state) => state.setGradientColors);
-  const [timeLeft, setTimeLeft] = useState(getTimeLeft(event.date));
+  const [timeLeft, setTimeLeft] = useState();
   const [eventPassed, setEventPassed] = useState(false);
 
   useEffect(() => {
-    if (event.photo) {
-      extractColorsFromImage(event.photo).then(setGradientColors);
+    if (event?.photo) {
+      console.log(event, ";event");
+      extractColorsFromImage(event?.photo).then(setGradientColors);
     }
-  }, [event.photo, setGradientColors]);
+  }, [event?.photo, setGradientColors]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const time = getTimeLeft(event.date);
+      const time = getTimeLeft(event?.date);
       setTimeLeft(time);
       setEventPassed(time.passed);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [event.date]);
+  }, [event?.date]);
 
   function getTimeLeft(eventDate) {
     const now = dayjs();
@@ -53,26 +66,50 @@ export default function EventPage() {
     };
   }
 
+  if (loading || !event || !timeLeft) {
+    return (
+      <FullScreenLoader>
+        <Spin size="large" tip="Carregando evento..." />
+      </FullScreenLoader>
+    );
+  }
+
   return (
     <StyledContainer>
-      <CountdownBox>
-        <Title level={2}>{event.name}</Title>
-        {eventPassed ? (
-          <Text type="danger">O evento já aconteceu!</Text>
-        ) : (
-          <div className="countdown">
-            <Text>{timeLeft.days}d</Text>
-            <Text>{timeLeft.hours}h</Text>
-            <Text>{timeLeft.minutes}m</Text>
-            <Text>{timeLeft.seconds}s</Text>
-          </div>
-        )}
-      </CountdownBox>
-      <EventInfo>
-        <Text strong>Local:</Text> <Text>{event.address}</Text>
+      <Header backgroundImage={event?.photo}>
+        <Overlay />
+        <CountdownBox>
+          <Title style={{ color: "#fff" }} level={2}>
+            {event?.name}
+          </Title>
+          {eventPassed ? (
+            <Text type="danger">O evento já aconteceu!</Text>
+          ) : (
+            <div className="countdown">
+              <Text style={{ color: "#fff" }}>{timeLeft.days}d</Text>
+              <Text style={{ color: "#fff" }}>{timeLeft.hours}h</Text>
+              <Text style={{ color: "#fff" }}>{timeLeft.minutes}m</Text>
+              <Text style={{ color: "#fff" }}>{timeLeft.seconds}s</Text>
+            </div>
+          )}
+        </CountdownBox>
+      </Header>
+
+      <EventInfoCard>
+        <Text strong>Local:</Text> <Text>{event?.address}</Text>
         <br />
-        <Text strong>Capacidade:</Text> <Text>{event.maxGuests} pessoas</Text>
-      </EventInfo>
+        <Text strong>Capacidade:</Text> <Text>{event?.maxGuests} pessoas</Text>
+      </EventInfoCard>
+
+      <ConfirmGuestsSection>
+        <Button
+          ghost
+          onClick={() => navigate(`Create-invite`, { state: event })}
+        >
+          Lista de convidados
+        </Button>
+        <Button ghost>Lista de convites</Button>
+      </ConfirmGuestsSection>
     </StyledContainer>
   );
 }

@@ -1,9 +1,9 @@
-import { useEventStore } from "../store/eventStore";
+import { useHomeEventsStore } from "../store/homeEventsStore";
 import { mockEvents } from "../mock/events";
 
-export const useEvents = (useMock = true) => {
+export const useHomeEvents = (useMock = true) => {
   const { events, loading, hasFetched, setEvents, setLoading } =
-    useEventStore();
+    useHomeEventsStore();
 
   const fetchEvents = async () => {
     if (hasFetched) return;

@@ -1,8 +1,9 @@
-import { useEvents } from "../../../hook/useEvent";
-import { Button, Card, Flex, Typography } from "antd";
+import { useHomeEvents } from "../../../hook/useHomeEvents";
+import { Button, Flex, Typography } from "antd";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import { slugify } from "../../../utils/slugify";
 
 const { Text } = Typography;
 
@@ -61,12 +62,14 @@ const Description = styled(Text)`
 `;
 
 export default function Highlight() {
-  const { events } = useEvents(true);
+  const { events } = useHomeEvents(true);
   const navigate = useNavigate();
 
   const upcomingEvent = events
     ?.filter((event) => dayjs(event.date).isAfter(dayjs()))
     .sort((a, b) => dayjs(a.date).diff(dayjs(b.date)))[0];
+
+  const slug = slugify(upcomingEvent.name);
 
   if (!upcomingEvent) {
     return <Text>Nenhum evento próximo</Text>;
@@ -87,9 +90,7 @@ export default function Highlight() {
             style={{
               alignSelf: "center",
             }}
-            onClick={() =>
-              navigate(`/Event/${upcomingEvent.id}`, { state: upcomingEvent })
-            }
+            onClick={() => navigate(`/Event/${slug}`)}
           >
             Mais Informações
           </Button>

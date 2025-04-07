@@ -1,10 +1,10 @@
 import Highlight from "./Highlight";
 import Events from "./Events";
-import { useEvents } from "../../hook/useEvent";
+import { useHomeEvents } from "../../hook/useHomeEvents";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { fetchEvents, events } = useEvents(true);
+  const { fetchEvents, events } = useHomeEvents(true);
 
   useEffect(() => {
     fetchEvents();

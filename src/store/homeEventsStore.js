@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export const useEventStore = create((set) => ({
+export const useHomeEventsStore = create((set) => ({
   events: [],
   loading: false,
   hasFetched: false,
