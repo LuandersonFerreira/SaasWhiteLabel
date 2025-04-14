@@ -13,3 +13,5 @@ export const GlobalStyles = createGlobalStyle`
     font-family: Arial, sans-serif;
   }
 `;
+
+export default GlobalStyles;
