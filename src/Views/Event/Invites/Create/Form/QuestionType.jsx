@@ -28,6 +28,7 @@ const QuestionType = ({ field, onFocus }) => {
         if (questionType === "text") {
           return (
             <div
+              key={field.name}
               style={{
                 margin: "10px",
               }}
@@ -46,7 +47,7 @@ const QuestionType = ({ field, onFocus }) => {
         }
 
         return (
-          <Form.List name={[field.name, "answers"]}>
+          <Form.List key={field.name} name={[field.name, "answers"]}>
             {(fields, { add, remove, move }) => (
               <StyledFlexColumn>
                 {fields.map((subField, index) => (

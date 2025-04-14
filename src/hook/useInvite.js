@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { mockInvite } from "../mock/invite";
+import { mockInvites } from "../mock/invites";
 import api from "./api";
 
 export const useInvite = (inviteId, useMock = false) => {
@@ -14,7 +14,7 @@ export const useInvite = (inviteId, useMock = false) => {
       try {
         setLoading(true);
         const response = useMock
-          ? mockInvite
+          ? mockInvites[0]
           : await api.get(`/api/invites/${inviteId}`);
         setInvite(response.data);
       } catch (err) {

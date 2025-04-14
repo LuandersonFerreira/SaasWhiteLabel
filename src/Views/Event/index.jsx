@@ -15,6 +15,7 @@ import {
 import { Typography, Button, Spin } from "antd";
 import { useThemeStore } from "../../store/themeStore";
 import { useEvents } from "../../hook/useEvents";
+import InviteList from "./InviteList";
 
 dayjs.extend(duration);
 
@@ -96,19 +97,25 @@ export default function EventPage() {
       </Header>
 
       <EventInfoCard>
-        <Text strong>Local:</Text> <Text>{event?.address}</Text>
+        <Text strong style={{ fontSize: "20px" }}>
+          Local:{" "}
+        </Text>
+        <Text style={{ fontSize: "20px" }}>{event?.address}</Text>
         <br />
-        <Text strong>Capacidade:</Text> <Text>{event?.maxGuests} pessoas</Text>
+        <Text strong style={{ fontSize: "18px" }}>
+          Capacidade:{" "}
+        </Text>
+        <Text style={{ fontSize: "18px" }}>{event?.maxGuests} pessoas</Text>
       </EventInfoCard>
 
       <ConfirmGuestsSection>
-        <Button
-          ghost
-          onClick={() => navigate(`Create-invite`, { state: event })}
-        >
-          Lista de convidados
-        </Button>
-        <Button ghost>Lista de convites</Button>
+        <InviteList>
+          {(handleClick) => (
+            <Button ghost onClick={handleClick}>
+              Lista de convites
+            </Button>
+          )}
+        </InviteList>
       </ConfirmGuestsSection>
     </StyledContainer>
   );

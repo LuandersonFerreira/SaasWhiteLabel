@@ -16,7 +16,7 @@ export const StyledContainer = styled.div`
 
 export const Header = styled.div`
   width: 100%;
-  height: 300px;
+  height: 600px;
   background-image: url(${(props) => props.backgroundImage});
   background-size: cover;
   background-position: center;
@@ -24,12 +24,26 @@ export const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 24px;
+
+  @media (max-width: 1200px) {
+    height: 500px;
+  }
+
+  @media (max-width: 768px) {
+    height: 400px;
+  }
+
+  @media (max-width: 480px) {
+    height: 300px;
+  }
 `;
 
 export const Overlay = styled.div`
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 24px;
 `;
 
 export const CountdownBox = styled.div`
