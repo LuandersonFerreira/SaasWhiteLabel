@@ -1,18 +1,35 @@
 import React from "react";
-import { Modal } from "antd";
+import { Button, Modal, Flex } from "antd";
 import List from "./list";
 
 const InviteList = ({ children }) => {
-  const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(true);
+  const [openFirstModal, setOpenFirstModal] = React.useState(false);
+  const [loadingFirst, setLoadingFirst] = React.useState(true);
+
+  const [openSecondModal, setOpenSecondModal] = React.useState(false);
+  const [loadingSecond, setLoadingSecond] = React.useState(true);
 
   const showLoading = () => {
-    setOpen(true);
-    setLoading(true);
+    setOpenFirstModal(true);
+    setLoadingFirst(true);
 
     setTimeout(() => {
-      setLoading(false);
+      setLoadingFirst(false);
     }, 2000);
+  };
+
+  const openSecond = () => {
+    setOpenSecondModal(true);
+    setLoadingSecond(true);
+
+    setTimeout(() => {
+      setLoadingSecond(false);
+    }, 1000);
+  };
+
+  const closeSecond = () => {
+    setOpenSecondModal(false);
+    setLoadingSecond(true);
   };
 
   return (
@@ -22,11 +39,26 @@ const InviteList = ({ children }) => {
       <Modal
         width={1200}
         title={<p>Lista de convites</p>}
-        loading={loading}
-        open={open}
-        onCancel={() => setOpen(false)}
+        open={openFirstModal}
+        onCancel={() => setOpenFirstModal(false)}
+        footer={null}
       >
         <List />
+      </Modal>
+
+      <Button ghost onClick={openSecond}>
+        Lista de Convidados
+      </Button>
+
+
+      <Modal
+        width={1200}
+        title={<p>Lista de Convidados</p>}
+        open={openSecondModal}
+        onCancel={() => setOpenSecondModal (false)}
+        footer={null}
+      >
+        {loadingSecond ? <p>Carregando convidados...</p> : <List />}
       </Modal>
     </>
   );
