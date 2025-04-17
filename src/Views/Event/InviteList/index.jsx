@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Modal, Flex } from "antd";
+import { Button, Modal } from "antd";
 import List from "./list";
+import Form from "./Form"
 
 const InviteList = ({ children }) => {
   const [openFirstModal, setOpenFirstModal] = React.useState(false);
@@ -46,19 +47,21 @@ const InviteList = ({ children }) => {
         <List />
       </Modal>
 
-      <Button ghost onClick={openSecond}>
+      <Button ghost onClick={() => setOpenSecondModal(true)}>
         Lista de Convidados
       </Button>
 
-
       <Modal
-        width={1200}
-        title={<p>Lista de Convidados</p>}
+        width={1000}
+        title="Lista de Convidados"
         open={openSecondModal}
-        onCancel={() => setOpenSecondModal (false)}
+        onCancel={() => {
+          setOpenSecondModal(false);
+          setOnEdit(null);
+        }}
         footer={null}
       >
-        {loadingSecond ? <p>Carregando convidados...</p> : <List />}
+        < Form />
       </Modal>
     </>
   );
