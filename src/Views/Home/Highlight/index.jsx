@@ -1,5 +1,6 @@
 import { useHomeEvents } from "../../../hook/useHomeEvents";
-import { Button, Flex, Typography } from "antd";
+import { Button, Flex, Typography, Tooltip} from "antd";
+import { PlusCircleOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
@@ -69,15 +70,30 @@ export default function Highlight() {
     ?.filter((event) => dayjs(event.date).isAfter(dayjs()))
     .sort((a, b) => dayjs(a.date).diff(dayjs(b.date)))[0];
 
-  const slug = slugify(upcomingEvent.name);
-
   if (!upcomingEvent) {
     return <Text>Nenhum evento próximo</Text>;
   }
 
+  const slug = slugify(upcomingEvent.name);
+
   return (
     <HighlightWrapper>
       <StyledCard $bgImage={upcomingEvent.photo}>
+      <Tooltip title="Criar novo evento">
+        <Button
+          shape="circle"
+          icon={<PlusCircleOutlined />}
+          style={{
+            position: "absolute",
+            top: 16,
+            right: 16,
+            zIndex: 2,
+            backgroundColor: "rgba(255, 255, 255, 0.85)",
+          }}
+          onClick={() => navigate("/createvents/createeventsform")}
+        />
+      </Tooltip>
+        
         <InfoOverlay>
           <Title>{upcomingEvent.name}</Title>
           <Description>
@@ -87,9 +103,7 @@ export default function Highlight() {
           <Button
             ghost
             size="large"
-            style={{
-              alignSelf: "center",
-            }}
+            style={{ alignSelf: "center" }}
             onClick={() => navigate(`/Event/${slug}`)}
           >
             Mais Informações
