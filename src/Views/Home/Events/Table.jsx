@@ -81,7 +81,7 @@ export default function CarouselEvents() {
                   <h4>Máx. Convidados: {event.maxGuests}</h4>
                   <Button
                     ghost
-                    onClick={() => navigate(`/Event/${slugify(event.name)}`)}
+                    onClick={() => navigate(`/${slugify(event.name)}`)}
                   >
                     Detalhes
                   </Button>

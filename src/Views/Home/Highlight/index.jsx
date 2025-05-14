@@ -1,5 +1,5 @@
 import { useHomeEvents } from "../../../hook/useHomeEvents";
-import { Button, Flex, Typography, Tooltip} from "antd";
+import { Button, Flex, Typography, Tooltip } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import dayjs from "dayjs";
@@ -79,21 +79,21 @@ export default function Highlight() {
   return (
     <HighlightWrapper>
       <StyledCard $bgImage={upcomingEvent.photo}>
-      <Tooltip title="Criar novo evento">
-        <Button
-          shape="circle"
-          icon={<PlusCircleOutlined />}
-          style={{
-            position: "absolute",
-            top: 16,
-            right: 16,
-            zIndex: 2,
-            backgroundColor: "rgba(255, 255, 255, 0.85)",
-          }}
-          onClick={() => navigate("/createvents/createeventsform")}
-        />
-      </Tooltip>
-        
+        <Tooltip title="Criar novo evento">
+          <Button
+            shape="circle"
+            icon={<PlusCircleOutlined />}
+            style={{
+              position: "absolute",
+              top: 16,
+              right: 16,
+              zIndex: 2,
+              backgroundColor: "rgba(255, 255, 255, 0.85)",
+            }}
+            onClick={() => navigate("/CriarEvento")}
+          />
+        </Tooltip>
+
         <InfoOverlay>
           <Title>{upcomingEvent.name}</Title>
           <Description>
@@ -103,8 +103,10 @@ export default function Highlight() {
           <Button
             ghost
             size="large"
-            style={{ alignSelf: "center" }}
-            onClick={() => navigate(`/Event/${slug}`)}
+            style={{
+              alignSelf: "center",
+            }}
+            onClick={() => navigate(`/${slug}`)}
           >
             Mais Informações
           </Button>

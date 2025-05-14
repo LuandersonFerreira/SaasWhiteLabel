@@ -1,8 +1,8 @@
 import { Button, Modal, Space } from "antd";
 import EditableTable from "../../../components/Table/EditableTable";
-import { mockInvites } from "../../../mock/invites";
 import React, { useRef } from "react";
 import CreateInvite from "../Invites/Create";
+import { mockInvitesList } from "../../../mock/invitesList";
 
 const List = () => {
   const [open, setOpen] = React.useState(false);
@@ -19,6 +19,16 @@ const List = () => {
       title: "Descrição",
       dataIndex: "description",
       key: "description",
+    },
+    {
+      title: "Enviados",
+      dataIndex: "sent",
+      key: "sent",
+    },
+    {
+      title: "Respondidos",
+      dataIndex: "answered",
+      key: "answered",
     },
     {
       title: "Ações",
@@ -92,7 +102,7 @@ const List = () => {
       <EditableTable
         scroll={{ x: 600 }}
         columns={columns}
-        dataSource={mockInvites}
+        dataSource={mockInvitesList}
         onAction={handleAction}
       />
     </>

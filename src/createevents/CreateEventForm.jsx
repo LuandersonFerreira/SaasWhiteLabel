@@ -1,4 +1,13 @@
-import { Form, Input, DatePicker, InputNumber, Upload, Button, Typography, message } from "antd";
+import {
+  Form,
+  Input,
+  DatePicker,
+  InputNumber,
+  Upload,
+  Button,
+  Typography,
+  message,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
@@ -11,11 +20,19 @@ export default function CreateEventForm() {
   const onFinish = (values) => {
     console.log("Evento criado:", values);
     message.success("Evento criado com sucesso!");
-    navigate("/"); 
+    navigate("/");
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto", padding: 24 }}>
+    <div
+      style={{
+        maxWidth: 600,
+        margin: "0 auto",
+        padding: 24,
+        background: "#fff",
+        borderRadius: 8,
+      }}
+    >
       <Title level={2}>Criar Novo Evento</Title>
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <Form.Item
@@ -27,11 +44,7 @@ export default function CreateEventForm() {
         </Form.Item>
 
         <Form.Item label="Fotos do Evento" name="photos">
-          <Upload
-            listType="picture"
-            beforeUpload={() => false} 
-            multiple
-          >
+          <Upload listType="picture" beforeUpload={() => false} multiple>
             <Button icon={<UploadOutlined />}>Selecionar Fotos</Button>
           </Upload>
         </Form.Item>
@@ -41,7 +54,11 @@ export default function CreateEventForm() {
           name="date"
           rules={[{ required: true, message: "A data é obrigatória" }]}
         >
-          <DatePicker showTime format="DD/MM/YYYY HH:mm" style={{ width: "100%" }} />
+          <DatePicker
+            showTime
+            format="DD/MM/YYYY HH:mm"
+            style={{ width: "100%" }}
+          />
         </Form.Item>
 
         <Form.Item
@@ -52,10 +69,7 @@ export default function CreateEventForm() {
           <Input placeholder="Digite o endereço do evento" />
         </Form.Item>
 
-        <Form.Item
-          label="Número Máximo de Convidados"
-          name="maxGuests"
-        >
+        <Form.Item label="Número Máximo de Convidados" name="maxGuests">
           <InputNumber
             min={1}
             placeholder="Digite o número máximo de convidados"

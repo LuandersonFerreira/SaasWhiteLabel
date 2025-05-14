@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { extractColorsFromImage } from "../../utils/extractColors";
 import dayjs from "dayjs";
@@ -23,7 +23,7 @@ const { Title, Text } = Typography;
 
 export default function EventPage() {
   const { eventName } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { event, loading } = useEvents(eventName, true);
 
   const setGradientColors = useThemeStore((state) => state.setGradientColors);

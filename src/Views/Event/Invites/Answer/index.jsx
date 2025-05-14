@@ -12,6 +12,8 @@ import {
 const InviteForm = ({ invite }) => {
   const [form] = Form.useForm();
 
+  console.log("Formulário:", invite);
+
   const onFinish = (values) => {
     console.log("Respostas do formulário:", values);
   };
