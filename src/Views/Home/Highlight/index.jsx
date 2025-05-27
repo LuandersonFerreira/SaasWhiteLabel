@@ -1,10 +1,8 @@
 import { useHomeEvents } from "../../../hook/useHomeEvents";
-import { Button, Flex, Typography, Tooltip } from "antd";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { Button, Flex, Typography } from "antd";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
-import { slugify } from "../../../utils/slugify";
 
 const { Text } = Typography;
 
@@ -63,7 +61,7 @@ const Description = styled(Text)`
 `;
 
 export default function Highlight() {
-  const { events } = useHomeEvents(true);
+  const { events } = useHomeEvents(false);
   const navigate = useNavigate();
 
   const upcomingEvent = events
@@ -74,30 +72,17 @@ export default function Highlight() {
     return <Text>Nenhum evento próximo</Text>;
   }
 
-  const slug = slugify(upcomingEvent.name);
+  // const slug = slugify(upcomingEvent.name);
 
   return (
     <HighlightWrapper>
       <StyledCard $bgImage={upcomingEvent.photo}>
-        <Tooltip title="Criar novo evento">
-          <Button
-            shape="circle"
-            icon={<PlusCircleOutlined />}
-            style={{
-              position: "absolute",
-              top: 16,
-              right: 16,
-              zIndex: 2,
-              backgroundColor: "rgba(255, 255, 255, 0.85)",
-            }}
-            onClick={() => navigate("/CriarEvento")}
-          />
-        </Tooltip>
-
         <InfoOverlay>
           <Title>{upcomingEvent.name}</Title>
           <Description>
-            {dayjs(upcomingEvent.date).format("DD/MM/YYYY HH:mm")}
+            {dayjs(upcomingEvent.date)
+              .subtract(3, "hour")
+              .format("DD/MM/YYYY HH:mm")}
           </Description>
           <Description>{upcomingEvent.address}</Description>
           <Button
@@ -106,7 +91,7 @@ export default function Highlight() {
             style={{
               alignSelf: "center",
             }}
-            onClick={() => navigate(`/${slug}`)}
+            onClick={() => navigate(`/${upcomingEvent.id}`)}
           >
             Mais Informações
           </Button>

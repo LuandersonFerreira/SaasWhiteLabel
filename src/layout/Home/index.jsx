@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  PlusCircleOutlined,
   SmileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -14,6 +15,7 @@ import {
   Layout,
   Menu,
   Space,
+  Tooltip,
 } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -176,21 +178,39 @@ const HomeLayout = () => {
                   fontSize: "16px",
                 }}
               />
+
               <Breadcrumb
                 items={breadcrumbItems.map(({ title, path }) => ({
                   title: <a onClick={() => navigate(path)}>{title}</a>,
                 }))}
               />
-              <Dropdown menu={{ items: dropdownItems }}>
-                <a onClick={(e) => e.preventDefault()}>
-                  <Space>
-                    <Avatar
+
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "10px" }}
+              >
+                <Tooltip title="Criar novo evento">
+                  <Button
+                    shape="circle"
+                    icon={<PlusCircleOutlined />}
+                    style={{
+                      backgroundColor: "rgba(255, 255, 255, 0.85)",
+                    }}
+                    onClick={() => navigate("/CriarEvento")}
+                  />
+                </Tooltip>
+
+                <Dropdown menu={{ items: dropdownItems }}>
+                  <a onClick={(e) => e.preventDefault()}>
+                    <Button
+                      shape="circle"
                       icon={<UserOutlined />}
-                      style={{ cursor: "pointer" }}
+                      style={{
+                        backgroundColor: "rgba(255, 255, 255, 0.85)",
+                      }}
                     />
-                  </Space>
-                </a>
-              </Dropdown>
+                  </a>
+                </Dropdown>
+              </div>
             </Header>
             <Content
               style={{

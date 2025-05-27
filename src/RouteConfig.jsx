@@ -12,12 +12,12 @@ const RouteConfig = () => {
       <Routes>
         <Route path="/" element={<HomeLayout />}>
           <Route index element={<Home />} />
-          <Route path="/:eventName" element={<Event />} />
-          <Route path="/Convite/:inviteId" element={<AnswerInvite />} />
+          <Route path="/:id" element={<Event />} />
           <Route path="/CriarEvento" element={<CreateEventForm />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="/Convite/:inviteId" element={<AnswerInvite />} />
       </Routes>
     </BrowserRouter>
   );

@@ -77,7 +77,6 @@ const List = () => {
       <Modal
         width={1200}
         height={600}
-        title={<p>Novo convite</p>}
         open={open}
         onCancel={handleCancel}
         styles={{

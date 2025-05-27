@@ -1,27 +1,21 @@
 import { useEffect, useState } from "react";
 import { mockEvents } from "../mock/events";
-import { unslugify } from "../utils/slugify";
-import { normalizeString } from "../utils/normalizeString";
+import api from "./api";
 // import api from "../services/api"; // descomente se estiver usando API real
 
-export const useEvents = (eventNameSlug, useMock = true) => {
+export const useEvents = (id, useMock = true) => {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchEvent = async () => {
     try {
       setLoading(true);
-
       if (useMock) {
-        const eventName = unslugify(eventNameSlug);
-        const found = mockEvents.find(
-          (e) => normalizeString(e.name) === normalizeString(eventName)
-        );
-        console.log(normalizeString(mockEvents[4].name), "found");
+        const found = mockEvents.find((e) => e.id === id);
         setEvent(found || null);
       } else {
-        // const response = await api.get(`/events/slug/${slug}`);
-        // setEvent(response.data);
+        const response = await api.get(`/api/events/${id}`);
+        setEvent(response.data);
       }
     } catch (error) {
       console.error("Erro ao buscar evento:", error);
@@ -30,9 +24,31 @@ export const useEvents = (eventNameSlug, useMock = true) => {
     }
   };
 
-  useEffect(() => {
-    if (eventNameSlug) fetchEvent();
-  }, [eventNameSlug, useMock]);
+  const createEvent = async (newEvent) => {
+    try {
+      setLoading(true);
 
-  return { event, loading };
+      if (useMock) {
+        mockEvents.push(newEvent);
+        setEvent(newEvent);
+        return newEvent;
+      } else {
+        const response = await api.post("/api/events", newEvent);
+        setEvent(response.data);
+        return response.data;
+      }
+    } catch (error) {
+      console.error("Erro ao criar evento:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    console.log("useEffect", id);
+    if (id) fetchEvent();
+  }, [id, useMock]);
+
+  return { event, loading, createEvent };
 };

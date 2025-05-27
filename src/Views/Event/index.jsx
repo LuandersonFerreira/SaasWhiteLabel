@@ -22,9 +22,9 @@ dayjs.extend(duration);
 const { Title, Text } = Typography;
 
 export default function EventPage() {
-  const { eventName } = useParams();
+  const { id } = useParams();
   // const navigate = useNavigate();
-  const { event, loading } = useEvents(eventName, true);
+  const { event, loading } = useEvents(id, false);
 
   const setGradientColors = useThemeStore((state) => state.setGradientColors);
   const [timeLeft, setTimeLeft] = useState();
@@ -105,7 +105,7 @@ export default function EventPage() {
         <Text strong style={{ fontSize: "18px" }}>
           Capacidade:{" "}
         </Text>
-        <Text style={{ fontSize: "18px" }}>{event?.maxGuests} pessoas</Text>
+        <Text style={{ fontSize: "18px" }}>{event?.maxguests} pessoas</Text>
       </EventInfoCard>
 
       <ConfirmGuestsSection>

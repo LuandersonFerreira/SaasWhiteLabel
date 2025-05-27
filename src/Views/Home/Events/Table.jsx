@@ -5,9 +5,10 @@ import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { useRef, useState } from "react";
 import { slugify } from "../../../utils/slugify";
+import dayjs from "dayjs";
 
 export default function CarouselEvents() {
-  const { events, loading } = useHomeEvents(true);
+  const { events, loading } = useHomeEvents(false);
   const navigate = useNavigate();
   const scrollRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -45,6 +46,8 @@ export default function CarouselEvents() {
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
+  console.log("Eventos:", events);
+
   return (
     <Container>
       {events.length === 0 && !loading ? (
@@ -77,8 +80,13 @@ export default function CarouselEvents() {
                 <EventContent>
                   <h1>{event.name}</h1>
                   <h4>{event.address}</h4>
-                  <h4>Data: {event.date}</h4>
-                  <h4>Máx. Convidados: {event.maxGuests}</h4>
+                  <h4>
+                    Data:{" "}
+                    {dayjs(event.date)
+                      .subtract(3, "hour")
+                      .format("DD/MM/YYYY HH:mm")}
+                  </h4>
+                  <h4>Máx. Convidados: {event.maxguests}</h4>
                   <Button
                     ghost
                     onClick={() => navigate(`/${slugify(event.name)}`)}

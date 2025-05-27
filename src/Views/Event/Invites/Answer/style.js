@@ -5,14 +5,12 @@ export const StyledForm = styled(Form)`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  background: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 6px;
 `;
 
 export const StyledFormItem = styled(Form.Item)`
   padding: 20px;
+  background: #f9f9f9;
+
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 24px;

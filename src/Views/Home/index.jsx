@@ -4,7 +4,7 @@ import { useHomeEvents } from "../../hook/useHomeEvents";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { fetchEvents, events } = useHomeEvents(true);
+  const { fetchEvents, events } = useHomeEvents(false);
 
   useEffect(() => {
     fetchEvents();
