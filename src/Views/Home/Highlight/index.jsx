@@ -72,6 +72,8 @@ export default function Highlight() {
     return <Text>Nenhum evento próximo</Text>;
   }
 
+  console.log("upcomingEvent", upcomingEvent);
+
   // const slug = slugify(upcomingEvent.name);
 
   return (
@@ -91,7 +93,7 @@ export default function Highlight() {
             style={{
               alignSelf: "center",
             }}
-            onClick={() => navigate(`/${upcomingEvent.id}`)}
+            onClick={() => navigate(`/${upcomingEvent.uuid}`)}
           >
             Mais Informações
           </Button>

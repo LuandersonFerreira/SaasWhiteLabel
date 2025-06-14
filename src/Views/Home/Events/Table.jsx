@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { useRef, useState } from "react";
-import { slugify } from "../../../utils/slugify";
 import dayjs from "dayjs";
 
 export default function CarouselEvents() {
@@ -15,10 +14,9 @@ export default function CarouselEvents() {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
-  // Função para rolar o carrossel manualmente com as setas
   const scroll = (direction) => {
     if (scrollRef.current) {
-      const scrollAmount = 250; // Pixels a rolar
+      const scrollAmount = 250;
       scrollRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
@@ -26,23 +24,20 @@ export default function CarouselEvents() {
     }
   };
 
-  // Iniciar arraste
   const handleMouseDown = (e) => {
     setIsDragging(true);
     setStartX(e.pageX);
     setScrollLeft(scrollRef.current.scrollLeft);
   };
 
-  // Finalizar arraste
   const handleMouseUp = () => {
     setIsDragging(false);
   };
 
-  // Mover durante o arraste
   const handleMouseMove = (e) => {
     if (!isDragging) return;
     e.preventDefault();
-    const walk = (e.pageX - startX) * 1.5; // Multiplicador para suavizar
+    const walk = (e.pageX - startX) * 1.5;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -87,10 +82,7 @@ export default function CarouselEvents() {
                       .format("DD/MM/YYYY HH:mm")}
                   </h4>
                   <h4>Máx. Convidados: {event.maxguests}</h4>
-                  <Button
-                    ghost
-                    onClick={() => navigate(`/${slugify(event.name)}`)}
-                  >
+                  <Button ghost onClick={() => navigate(`/${event.uuid}`)}>
                     Detalhes
                   </Button>
                 </EventContent>

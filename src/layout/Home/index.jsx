@@ -6,17 +6,7 @@ import {
   SmileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import {
-  Avatar,
-  Breadcrumb,
-  Button,
-  ConfigProvider,
-  Dropdown,
-  Layout,
-  Menu,
-  Space,
-  Tooltip,
-} from "antd";
+import { Button, ConfigProvider, Dropdown, Layout, Menu, Tooltip } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { useThemeStore } from "../../store/themeStore";
@@ -76,14 +66,14 @@ const HomeLayout = () => {
     },
   ];
 
-  const pathSnippets = location.pathname.split("/").filter((i) => i);
-  const breadcrumbItems = [
-    { title: "Home", path: "/" },
-    ...pathSnippets.map((snippet, index) => ({
-      title: snippet,
-      path: `/${pathSnippets.slice(0, index + 1).join("/")}`,
-    })),
-  ];
+  // const pathSnippets = location.pathname.split("/").filter((i) => i);
+  // const breadcrumbItems = [
+  //   { title: "Home", path: "/" },
+  //   ...pathSnippets.map((snippet, index) => ({
+  //     title: snippet,
+  //     path: `/${pathSnippets.slice(0, index + 1).join("/")}`,
+  //   })),
+  // ];
 
   useEffect(() => {
     const matchedItem = menuItems.find(
@@ -179,11 +169,11 @@ const HomeLayout = () => {
                 }}
               />
 
-              <Breadcrumb
+              {/* <Breadcrumb
                 items={breadcrumbItems.map(({ title, path }) => ({
                   title: <a onClick={() => navigate(path)}>{title}</a>,
                 }))}
-              />
+              /> */}
 
               <div
                 style={{ display: "flex", alignItems: "center", gap: "10px" }}

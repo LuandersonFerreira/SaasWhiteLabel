@@ -9,14 +9,12 @@ import {
   message,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 import { useEvents } from "../hook/useEvents";
 
 const { Title } = Typography;
 
 export default function CreateEventForm() {
   const [form] = Form.useForm();
-  const navigate = useNavigate();
 
   const { createEvent } = useEvents(null, false);
 
@@ -25,6 +23,8 @@ export default function CreateEventForm() {
       const payload = {
         ...values,
         date: values.date.toISOString(), // garante UTC
+        photo:
+          "https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg",
       };
 
       console.log("Payload do evento:", payload);
@@ -32,9 +32,9 @@ export default function CreateEventForm() {
       await createEvent(payload);
       message.success("Evento criado com sucesso!");
     } catch (err) {
-      console.error("Falha ao criar evento", err);
+      message.error(err.response.data);
+      console.error("Falha ao criar evento", err.response.data);
     }
-    // navigate("/");
   };
 
   return (
@@ -51,10 +51,18 @@ export default function CreateEventForm() {
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <Form.Item
           label="Nome do Evento"
-          name="name"
+          name="title"
           rules={[{ required: true, message: "O nome é obrigatório" }]}
         >
           <Input placeholder="Digite o nome do evento" />
+        </Form.Item>
+
+        <Form.Item
+          label="Descrição"
+          name="description"
+          rules={[{ required: false }]}
+        >
+          <Input placeholder="Descrição do evento" />
         </Form.Item>
 
         <Form.Item label="Fotos do Evento" name="photo">
@@ -83,7 +91,7 @@ export default function CreateEventForm() {
           <Input placeholder="Digite o endereço do evento" />
         </Form.Item>
 
-        <Form.Item label="Número Máximo de Convidados" name="maxguests">
+        <Form.Item label="Número Máximo de Convidados" name="maxGuests">
           <InputNumber
             min={1}
             placeholder="Digite o número máximo de convidados"

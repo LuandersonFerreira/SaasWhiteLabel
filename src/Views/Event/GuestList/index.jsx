@@ -3,7 +3,7 @@ import { Modal } from "antd";
 import List from "./list";
 
 // eslint-disable-next-line react/prop-types
-const InviteList = ({ children }) => {
+const GuestList = ({ children, eventId }) => {
   const [openFirstModal, setOpenFirstModal] = React.useState(false);
 
   const showLoading = () => {
@@ -16,15 +16,15 @@ const InviteList = ({ children }) => {
 
       <Modal
         width={1200}
-        title={<p>Lista de convites</p>}
+        title={<p>Lista de convidados</p>}
         open={openFirstModal}
         onCancel={() => setOpenFirstModal(false)}
         footer={null}
       >
-        <List />
+        <List eventId={eventId} />
       </Modal>
     </>
   );
 };
 
-export default InviteList;
+export default GuestList;

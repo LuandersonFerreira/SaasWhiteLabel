@@ -15,7 +15,8 @@ import {
 import { Typography, Button, Spin } from "antd";
 import { useThemeStore } from "../../store/themeStore";
 import { useEvents } from "../../hook/useEvents";
-import InviteList from "./InviteList";
+// import InviteList from "./InviteList";
+import GuestList from "./GuestList";
 
 dayjs.extend(duration);
 
@@ -81,7 +82,7 @@ export default function EventPage() {
         <Overlay />
         <CountdownBox>
           <Title style={{ color: "#fff" }} level={2}>
-            {event?.name}
+            {event?.title}
           </Title>
           {eventPassed ? (
             <Text type="danger">O evento já aconteceu!</Text>
@@ -97,25 +98,47 @@ export default function EventPage() {
       </Header>
 
       <EventInfoCard>
+        {event?.description && (
+          <>
+            <Text strong style={{ fontSize: "18px" }}>
+              Descrição:{" "}
+            </Text>
+            <Text style={{ fontSize: "18px" }}>{event?.description}</Text>
+          </>
+        )}
+        <br />
+
         <Text strong style={{ fontSize: "20px" }}>
           Local:{" "}
         </Text>
         <Text style={{ fontSize: "20px" }}>{event?.address}</Text>
         <br />
-        <Text strong style={{ fontSize: "18px" }}>
-          Capacidade:{" "}
-        </Text>
-        <Text style={{ fontSize: "18px" }}>{event?.maxguests} pessoas</Text>
+
+        {event?.maxGuests && (
+          <>
+            <Text strong style={{ fontSize: "18px" }}>
+              Capacidade:{" "}
+            </Text>
+            <Text style={{ fontSize: "18px" }}>{event?.maxGuests}</Text>
+          </>
+        )}
       </EventInfoCard>
 
       <ConfirmGuestsSection>
-        <InviteList>
+        {/* <InviteList>
           {(handleClick) => (
             <Button ghost onClick={handleClick}>
               Lista de convites
             </Button>
           )}
-        </InviteList>
+        </InviteList> */}
+        <GuestList eventId={id}>
+          {(handleClick) => (
+            <Button ghost onClick={handleClick}>
+              Lista de convidados
+            </Button>
+          )}
+        </GuestList>
       </ConfirmGuestsSection>
     </StyledContainer>
   );

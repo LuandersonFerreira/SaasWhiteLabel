@@ -18,7 +18,7 @@ export const useHomeEvents = (useMock = true) => {
       if (useMock) {
         data = mockEvents;
       } else {
-        const response = await api.get("/api/events");
+        const response = await api.get("/event/list");
         data = response.data;
       }
 

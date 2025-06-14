@@ -14,7 +14,7 @@ export const useEvents = (id, useMock = true) => {
         const found = mockEvents.find((e) => e.id === id);
         setEvent(found || null);
       } else {
-        const response = await api.get(`/api/events/${id}`);
+        const response = await api.get(`/event?eventId=${id}`);
         setEvent(response.data);
       }
     } catch (error) {
@@ -33,7 +33,7 @@ export const useEvents = (id, useMock = true) => {
         setEvent(newEvent);
         return newEvent;
       } else {
-        const response = await api.post("/api/events", newEvent);
+        const response = await api.post("/event", newEvent);
         setEvent(response.data);
         return response.data;
       }

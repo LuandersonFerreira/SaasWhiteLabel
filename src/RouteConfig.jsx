@@ -3,8 +3,9 @@ import Home from "./Views/Home/index.jsx";
 import Login from "./Views/Login/index.jsx";
 import HomeLayout from "./layout/Home/index.jsx";
 import Event from "./Views/Event/index.jsx";
-import AnswerInvite from "./Views/Event/Invites/Answer/index.jsx";
+// import AnswerInvite from "./Views/Event/Invites/Answer/index.jsx";
 import CreateEventForm from "./createevents/CreateEventForm.jsx";
+import GuestHome from "./Views/Guest/index.jsx";
 
 const RouteConfig = () => {
   return (
@@ -17,7 +18,8 @@ const RouteConfig = () => {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<h1>Not Found</h1>} />
-        <Route path="/Convite/:inviteId" element={<AnswerInvite />} />
+        {/* <Route path="/Convite/:inviteId" element={<AnswerInvite />} /> */}
+        <Route path="/Convite/:guestId" element={<GuestHome />} />
       </Routes>
     </BrowserRouter>
   );

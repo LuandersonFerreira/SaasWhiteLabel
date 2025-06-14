@@ -1,23 +1,36 @@
 import { useState } from "react";
-import { Form, Input, Button, Checkbox, Typography } from "antd";
+import { Button, Form, Input, Typography } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Container, StyledForm } from "./style";
+import api from "../../hook/api";
+import { useNavigate } from "react-router-dom";
 
-const { Title, Link } = Typography;
+const { Title } = Typography;
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
-    alert(`Enviando os dados: ${username} - ${password}`);
+  const handleSubmit = async () => {
+    try {
+      const response = await api.post(`/login`, {
+        email,
+        password,
+      });
+      localStorage.setItem("token", response.data.token);
+      navigate(`/`);
+    } catch (error) {
+      console.error("Erro ao buscar evento:", error);
+    }
   };
 
   return (
     <Container>
       <StyledForm name="login-form" onFinish={handleSubmit} layout="vertical">
         <Title level={3} style={{ textAlign: "center", color: "#fff" }}>
-          Crie seu evento
+          Realizar login
         </Title>
 
         <Form.Item
@@ -27,7 +40,7 @@ const Login = () => {
           <Input
             prefix={<UserOutlined />}
             placeholder="Insira seu e-mail"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Item>
 
@@ -42,22 +55,11 @@ const Login = () => {
           />
         </Form.Item>
 
-        <Form.Item style={{ marginBottom: "10px" }}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Checkbox>Lembre de mim</Checkbox>
-            <Link href="#">Esqueceu a senha?</Link>
-          </div>
-        </Form.Item>
-
         <Form.Item>
           <Button type="primary" htmlType="submit" block>
-            Enviar código de verificação
+            Entrar
           </Button>
         </Form.Item>
-
-        <div style={{ textAlign: "center", color: "#fff" }}>
-          <Link href="#">Criar conta</Link>
-        </div>
       </StyledForm>
     </Container>
   );
