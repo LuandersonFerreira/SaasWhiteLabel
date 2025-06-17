@@ -1,7 +1,6 @@
 import axios from "axios";
-// import { redirect } from "react-router-dom";
 
-export const baseUrl = "http://localhost:9000";
+export const baseUrl = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
   baseURL: baseUrl,
@@ -31,6 +30,7 @@ api.interceptors.response.use(
 
       if (status === 401) {
         //logout();
+        window.location.href = "/login";
         console.log(
           "Usuário não autorizado. Redirecionando para a página de login."
         );

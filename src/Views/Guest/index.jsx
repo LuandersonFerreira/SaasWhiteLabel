@@ -3,6 +3,8 @@ import { Form, Spin } from "antd";
 import { useParams } from "react-router-dom";
 import api from "../../hook/api";
 import GuestForm from "./Form";
+import { Container, PageBackground, StyledCard } from "./style";
+import Info from "./Info";
 
 export default function GuestHome() {
   const { guestId } = useParams();
@@ -58,11 +60,23 @@ export default function GuestHome() {
   if (loading) return <Spin />;
 
   return (
-    <GuestForm
-      guest={guest}
-      form={form}
-      event={event}
-      handleSubmit={handleSubmit}
-    />
+    <>
+      <PageBackground backgroundImage={event?.photo} />
+
+      <Container>
+        <StyledCard title="Informações do Evento">
+          <Info event={event} />
+        </StyledCard>
+
+        <StyledCard title="Responder Convite">
+          <GuestForm
+            guest={guest}
+            form={form}
+            event={event}
+            handleSubmit={handleSubmit}
+          />
+        </StyledCard>
+      </Container>
+    </>
   );
 }
