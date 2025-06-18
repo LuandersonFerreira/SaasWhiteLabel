@@ -5,6 +5,7 @@ export function logout() {
   if (typeof window !== "undefined") {
     localStorage.removeItem("authToken");
     localStorage.removeItem("authUser");
+    window.location.href = "/login";
   }
 }
 

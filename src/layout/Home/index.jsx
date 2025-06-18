@@ -7,7 +7,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Button, ConfigProvider, Dropdown, Layout, Menu, Tooltip } from "antd";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { useThemeStore } from "../../store/themeStore";
 import styled from "styled-components";
@@ -64,11 +64,7 @@ const HomeLayout = () => {
     },
     {
       key: "2",
-      label: (
-        <Link to="/login">
-          <a onClick={handleSignOut}>Sair</a>
-        </Link>
-      ),
+      label: <a onClick={handleSignOut}>Sair</a>,
       icon: <SmileOutlined />,
     },
   ];
