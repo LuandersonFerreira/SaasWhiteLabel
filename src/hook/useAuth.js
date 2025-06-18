@@ -4,7 +4,6 @@ import api from "./api";
 export function logout() {
   localStorage.removeItem("authToken");
   localStorage.removeItem("authUser");
-  window.location.href = "/login";
 }
 
 export const useAuth = () => {
