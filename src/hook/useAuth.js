@@ -3,8 +3,8 @@ import api from "./api";
 
 export function logout() {
   if (typeof window !== "undefined") {
-    // localStorage.removeItem("authToken");
-    // localStorage.removeItem("authUser");
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("authUser");
   }
 }
 
@@ -16,8 +16,8 @@ export const useAuth = () => {
     let savedToken = "";
     let savedUser = "";
     if (typeof window !== "undefined") {
-      // savedToken = localStorage.getItem("authToken");
-      // savedUser = localStorage.getItem("authUser");
+      savedToken = localStorage.getItem("authToken");
+      savedUser = localStorage.getItem("authUser");
     }
 
     if (savedToken && savedUser) {
@@ -33,8 +33,8 @@ export const useAuth = () => {
       const { token, user } = response.data;
 
       if (typeof window !== "undefined") {
-        // localStorage.setItem("authToken", token);
-        // localStorage.setItem("authUser", JSON.stringify(user));
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("authUser", JSON.stringify(user));
       }
 
       setToken(token);
@@ -49,8 +49,8 @@ export const useAuth = () => {
 
   const logout = useCallback(() => {
     if (typeof window !== "undefined") {
-      // localStorage.removeItem("authToken");
-      // localStorage.removeItem("authUser");
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authUser");
       setToken(null);
       setUser(null);
     }
