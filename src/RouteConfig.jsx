@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, HashRouter } from "react-router-dom";
 import Home from "./Views/Home/index.jsx";
 import Login from "./Views/Login/index.jsx";
 import HomeLayout from "./layout/Home/index.jsx";
@@ -9,7 +9,7 @@ import GuestHome from "./Views/Guest/index.jsx";
 
 const RouteConfig = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<HomeLayout />}>
           <Route index element={<Home />} />
@@ -17,11 +17,11 @@ const RouteConfig = () => {
           <Route path="/CriarEvento" element={<CreateEventForm />} />
         </Route>
         <Route path="/login" element={<Login />} />
-        <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="*" element={<h1>Página não encontrada</h1>} />
         {/* <Route path="/Convite/:inviteId" element={<AnswerInvite />} /> */}
         <Route path="/Convite/:guestId" element={<GuestHome />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
