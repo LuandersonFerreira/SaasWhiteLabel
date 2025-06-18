@@ -15,7 +15,7 @@ export const useInvite = (inviteId, useMock = false) => {
         setLoading(true);
         const response = useMock
           ? mockInvites[0]
-          : await api.get(`/api/invites/${inviteId}`);
+          : await api.get(`/invites/${inviteId}`);
         setInvite(response.data);
       } catch (err) {
         setError(err.message || "Erro ao buscar convite");
