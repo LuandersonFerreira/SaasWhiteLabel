@@ -15,7 +15,11 @@ export const useEvents = (id, useMock = true) => {
         setEvent(found || null);
       } else {
         const response = await api.get(`/event?eventId=${id}`);
-        setEvent(response.data);
+        const formattedEvent = {
+          ...response.data,
+          banner: `data:image/jpeg;base64,${response.data.banner}`,
+        };
+        setEvent(formattedEvent);
       }
     } catch (error) {
       console.error("Erro ao buscar evento:", error);
@@ -46,7 +50,6 @@ export const useEvents = (id, useMock = true) => {
   };
 
   useEffect(() => {
-    console.log("useEffect", id);
     if (id) fetchEvent();
   }, [id, useMock]);
 

@@ -7,8 +7,7 @@ export default function CreateInvite() {
 
   const handleSubmit = async () => {
     try {
-      const formValues = await form.validateFields();
-      console.log("Final JSON:", { ...formValues });
+      await form.validateFields();
     } catch (error) {
       console.error("Erro ao enviar:", error);
     }

@@ -11,6 +11,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { useThemeStore } from "../../store/themeStore";
 import styled from "styled-components";
+import { logout } from "../../hook/useAuth";
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -52,7 +53,9 @@ const HomeLayout = () => {
   const [collapsed, setCollapsed] = useState(isSmallScreen ? true : false);
   const [selectedKey, setSelectedKey] = useState("");
 
-  const handleSignOut = () => {};
+  const handleSignOut = () => {
+    logout();
+  };
 
   const dropdownItems = [
     {

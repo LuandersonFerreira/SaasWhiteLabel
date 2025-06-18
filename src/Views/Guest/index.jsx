@@ -35,7 +35,11 @@ export default function GuestHome() {
         const response = await api.get(
           `/guest/event/${guest.eventId}?guestId=${guestId}`
         );
-        setEvent(response.data);
+        const formattedEvent = {
+          ...response.data,
+          banner: `data:image/jpeg;base64,${response.data.banner}`,
+        };
+        setEvent(formattedEvent);
       } catch (error) {
         console.error("Erro ao carregar evento:", error);
       } finally {
@@ -61,7 +65,7 @@ export default function GuestHome() {
 
   return (
     <>
-      <PageBackground backgroundImage={event?.photo} />
+      <PageBackground backgroundImage={event?.banner} />
 
       <Container>
         <StyledCard title="Informações do Evento">

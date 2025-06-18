@@ -11,7 +11,6 @@ const CreateLinkForm = forwardRef((props, ref) => {
   const handleSubmit = async () => {
     try {
       const formValues = await form.validateFields();
-      console.log("Final JSON:", { ...formValues });
       return formValues;
     } catch (error) {
       console.error("Erro ao enviar:", error);

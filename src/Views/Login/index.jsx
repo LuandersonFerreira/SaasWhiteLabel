@@ -2,27 +2,25 @@ import { useState } from "react";
 import { Button, Form, Input, Typography } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Container, StyledForm } from "./style";
-import api from "../../hook/api";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hook/useAuth";
 
 const { Title } = Typography;
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async () => {
-    try {
-      const response = await api.post(`/login`, {
-        email,
-        password,
-      });
-      localStorage.setItem("token", response.data.token);
+    const success = await login(email, password);
+    if (success) {
+      alert("Login feito com sucesso!");
       navigate(`/`);
-    } catch (error) {
-      console.error("Erro ao buscar evento:", error);
+    } else {
+      alert("Falha no login");
     }
   };
 

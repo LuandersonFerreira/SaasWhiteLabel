@@ -72,13 +72,11 @@ export default function Highlight() {
     return <Text>Nenhum evento próximo</Text>;
   }
 
-  console.log("upcomingEvent", upcomingEvent);
-
   // const slug = slugify(upcomingEvent.name);
 
   return (
     <HighlightWrapper>
-      <StyledCard $bgImage={upcomingEvent.photo}>
+      <StyledCard $bgImage={upcomingEvent?.banner}>
         <InfoOverlay>
           <Title>{upcomingEvent.name}</Title>
           <Description>

@@ -28,10 +28,10 @@ export default function EventPage() {
   const setGradientColors = useThemeStore((state) => state.setGradientColors);
 
   useEffect(() => {
-    if (event?.photo) {
-      extractColorsFromImage(event?.photo).then(setGradientColors);
+    if (event?.banner) {
+      extractColorsFromImage(event?.banner).then(setGradientColors);
     }
-  }, [event?.photo, setGradientColors]);
+  }, [event?.banner, setGradientColors]);
 
   if (loading || !event) {
     return (

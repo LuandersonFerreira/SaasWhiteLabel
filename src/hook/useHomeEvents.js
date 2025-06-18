@@ -22,7 +22,11 @@ export const useHomeEvents = (useMock = true) => {
         data = response.data;
       }
 
-      setEvents(data);
+      const formattedEvents = data.map((event) => ({
+        ...event,
+        banner: `data:image/jpeg;base64,${event.banner}`,
+      }));
+      setEvents(formattedEvents);
     } catch (error) {
       console.error("Erro ao buscar eventos:", error);
     } finally {
