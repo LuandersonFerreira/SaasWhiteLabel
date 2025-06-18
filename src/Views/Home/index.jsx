@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 30 }}>
-      <div>{events.length > 0 && <Highlight />}</div>
+      <div>{events?.length > 0 && <Highlight />}</div>
       <Events />
     </div>
   );

@@ -1,4 +1,6 @@
 import axios from "axios";
+import { logout } from "./useAuth";
+import { message } from "antd";
 
 export const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -11,7 +13,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   async (config) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("authToken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -29,20 +31,19 @@ api.interceptors.response.use(
       const { status } = error.response;
 
       if (status === 401) {
-        //logout();
-        window.location.href = "/login";
-        console.log(
-          "Usuário não autorizado. Redirecionando para a página de login."
+        logout();
+        message.error(
+          "Sessão expirada ou não autenticado. Por favor, faça login novamente."
         );
       }
       if (status === 403) {
-        console.error("Acesso negado: Você não tem permissão para isso.");
+        message.error("Acesso negado: Você não tem permissão para isso.");
       }
       if (status === 500) {
-        console.error("Erro interno no servidor.");
+        message.error("Erro interno no servidor. Tente novamente mais tarde.");
       }
     } else {
-      console.error("Erro na conexão com o servidor.");
+      message.error("Erro de rede ou servidor indisponível.");
     }
 
     return Promise.reject(error);

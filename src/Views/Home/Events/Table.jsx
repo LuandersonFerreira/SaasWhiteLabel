@@ -41,14 +41,12 @@ export default function CarouselEvents() {
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
-  console.log("Eventos:", events);
-
   return (
     <Container>
-      {events.length === 0 && !loading ? (
+      {!events || (events?.length === 0 && !loading) ? (
         <EmptyState>
           <p>Nenhum evento encontrado.</p>
-          <Button type="primary" onClick={() => console.log("Criar Evento")}>
+          <Button type="primary" onClick={() => navigate("/CriarEvento")}>
             Criar Evento
           </Button>
         </EmptyState>
@@ -70,8 +68,8 @@ export default function CarouselEvents() {
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
           >
-            {events.map((event) => (
-              <EventCard key={event.id} background={event.photo}>
+            {events?.map((event) => (
+              <EventCard key={event.id} background={event?.banner}>
                 <EventContent>
                   <h1>{event.name}</h1>
                   <h4>{event.address}</h4>

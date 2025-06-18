@@ -146,17 +146,13 @@ const List = ({ eventId }) => {
       };
 
       copyToClipboard();
-    } catch (error) {
-      console.log(error, "riks");
+    } catch {
+      message.error("Erro ao criar o link de convite.");
     }
   };
 
   const handleCancel = async () => {
-    try {
-      setOpen(false);
-    } catch (error) {
-      console.log(error, "riks");
-    }
+    setOpen(false);
   };
 
   return (

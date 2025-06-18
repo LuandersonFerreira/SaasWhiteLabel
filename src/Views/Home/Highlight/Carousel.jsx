@@ -16,7 +16,7 @@ const CarouselHighlight = ({ events = [] }) => (
     autoplay={{ dotDuration: true }}
     autoplaySpeed={5000}
   >
-    {events.map((event) => (
+    {events?.map((event) => (
       <EventCard key={event.id} event={event} />
     ))}
   </CarouselWrapper>
@@ -26,7 +26,7 @@ CarouselHighlight.propTypes = {
   events: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      photo: PropTypes.string.isRequired,
+      banner: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       date: PropTypes.string.isRequired,
       address: PropTypes.string.isRequired,
@@ -39,7 +39,7 @@ export default CarouselHighlight;
 const EventCard = ({ event }) => {
   return (
     <EventCardContainer>
-      <EventImage src={event.photo} alt={event.name} />
+      <EventImage src={event?.banner} alt={event.name} />
       <EventContent>
         <EventTitle>{event.name}</EventTitle>
         <EventText>📅 {event.date}</EventText>
@@ -52,7 +52,7 @@ const EventCard = ({ event }) => {
 EventCard.propTypes = {
   event: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    photo: PropTypes.string.isRequired,
+    banner: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,

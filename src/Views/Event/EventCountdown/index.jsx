@@ -34,7 +34,7 @@ export default function EventCountdown(props) {
   const formatTime = (value) => String(value).padStart(2, "0");
 
   return (
-    <Header backgroundImage={event?.photo}>
+    <Header backgroundImage={event?.banner}>
       <CountdownBox>
         <Title style={{ color: "#fff", marginBottom: 16 }} level={2}>
           {event?.title}
@@ -82,7 +82,7 @@ EventCountdown.propTypes = {
     uuid: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
-    photo: PropTypes.string,
+    banner: PropTypes.string,
     address: PropTypes.string,
     date: PropTypes.string.isRequired,
     maxGuests: PropTypes.number,

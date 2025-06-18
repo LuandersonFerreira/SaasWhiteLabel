@@ -10,27 +10,48 @@ import {
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useEvents } from "../hook/useEvents";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
 export default function CreateEventForm() {
+  const navigate = useNavigate();
+
   const [form] = Form.useForm();
+  const [base64Image, setBase64Image] = useState(null);
 
   const { createEvent } = useEvents(null, false);
+
+  const handleFileChange = (info) => {
+    const file = info.file.originFileObj;
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      message.error("Por favor, selecione uma imagem válida.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result.split(",")[1];
+      setBase64Image(base64);
+      form.setFieldsValue({ photo: base64 });
+    };
+    reader.readAsDataURL(file);
+  };
 
   const onFinish = async (values) => {
     try {
       const payload = {
         ...values,
         date: values.date.toISOString(), // garante UTC
-        photo:
-          "https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg",
+        banner: base64Image,
       };
-
-      console.log("Payload do evento:", payload);
 
       await createEvent(payload);
       message.success("Evento criado com sucesso!");
+      navigate("/");
     } catch (err) {
       message.error(err.response.data);
       console.error("Falha ao criar evento", err.response.data);
@@ -65,8 +86,13 @@ export default function CreateEventForm() {
           <Input placeholder="Descrição do evento" />
         </Form.Item>
 
-        <Form.Item label="Fotos do Evento" name="photo">
-          <Upload listType="picture" beforeUpload={() => false} multiple>
+        <Form.Item label="Fotos do Evento" name="banner">
+          <Upload
+            listType="picture"
+            beforeUpload={() => false}
+            onChange={handleFileChange}
+            maxCount={1}
+          >
             <Button icon={<UploadOutlined />}>Selecionar Foto</Button>
           </Upload>
         </Form.Item>
