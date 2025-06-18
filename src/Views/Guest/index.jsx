@@ -11,14 +11,24 @@ export default function GuestHome() {
   const [guest, setGuest] = useState(null);
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const [updatingGuest, setUpdatingGuest] = useState(false);
+
   const [form] = Form.useForm();
 
   useEffect(() => {
     const fetchGuest = async () => {
       try {
         const response = await api.get(`/guest?guestId=${guestId}`);
-        setGuest(response.data);
-        form.setFieldsValue(response.data);
+
+        setGuest({
+          ...response.data,
+          ticketCount: response.data.ticketCount || 1,
+        });
+        form.setFieldsValue({
+          ...response.data,
+          ticketCount: response.data.ticketCount || 1,
+        });
       } catch (error) {
         console.error("Erro ao carregar convidado:", error);
       }
@@ -39,6 +49,7 @@ export default function GuestHome() {
           ...response.data,
           banner: `data:image/jpeg;base64,${response.data.banner}`,
         };
+
         setEvent(formattedEvent);
       } catch (error) {
         console.error("Erro ao carregar evento:", error);
@@ -53,11 +64,15 @@ export default function GuestHome() {
   }, [guest?.eventId]);
 
   const handleSubmit = async (values) => {
+    setUpdatingGuest(true);
+
     try {
       await api.put(`/guest`, { ...values, uuid: guestId });
       alert("Dados enviados com sucesso!");
     } catch (error) {
       console.error("Erro ao enviar resposta:", error);
+    } finally {
+      setUpdatingGuest(false);
     }
   };
 
@@ -78,6 +93,7 @@ export default function GuestHome() {
             form={form}
             event={event}
             handleSubmit={handleSubmit}
+            loading={updatingGuest}
           />
         </StyledCard>
       </Container>

@@ -1,9 +1,11 @@
-import { Button, message, Modal, Space, Tag } from "antd";
+import { Button, Flex, message, Modal, Space, Tag, Typography } from "antd";
 import EditableTable from "../../../components/Table/EditableTable";
 import React, { useRef } from "react";
 import { useGuest } from "../../../hook/useGuest";
 import dayjs from "dayjs";
 import CreateLinkForm from "./CreateLinkForm";
+
+const { Text } = Typography;
 
 // eslint-disable-next-line react/prop-types
 const List = ({ eventId }) => {
@@ -36,6 +38,12 @@ const List = ({ eventId }) => {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      filters: [
+        { text: "Pendente", value: "pending" },
+        { text: "Confirmado", value: "confirmed" },
+        { text: "Recusado", value: "declined" },
+      ],
+      onFilter: (value, record) => record.status === value,
       render: (status) => {
         let color = "";
         let text = "";
@@ -55,12 +63,19 @@ const List = ({ eventId }) => {
             break;
           default:
             color = "default";
+            text = status;
         }
 
         return <Tag color={color}>{text}</Tag>;
       },
     },
-
+    {
+      title: "Quantidade de senhas",
+      dataIndex: "maxTicketCount",
+      key: "maxTicketCount",
+      render: (maxTicketCount, record) =>
+        `${record.ticketCount}/${maxTicketCount}`,
+    },
     {
       title: "Criação do link",
       dataIndex: "createdAt",
@@ -74,8 +89,8 @@ const List = ({ eventId }) => {
     },
     {
       title: "Última atualização",
-      dataIndex: "lastUpdate",
-      key: "lastUpdate",
+      dataIndex: "lastUpdated",
+      key: "lastUpdated",
       render: (lastUpdate) =>
         lastUpdate
           ? dayjs(lastUpdate).add(3, "hour").format("DD/MM/YYYY HH:mm")
@@ -132,7 +147,18 @@ const List = ({ eventId }) => {
   const handleSubmit = async () => {
     try {
       const values = await formRef.current.submit();
-      const link = await createGuest(values);
+      const maxCount = parseInt(values.maxTicketCount, 10);
+
+      const guest = {
+        ...values,
+        maxTicketCount: isNaN(maxCount) ? 1 : maxCount,
+      };
+      const link = await createGuest(guest);
+
+      if (!link) {
+        message.error("Erro ao criar o link de convite.");
+        return;
+      }
 
       const copyToClipboard = () => {
         navigator.clipboard
@@ -155,20 +181,28 @@ const List = ({ eventId }) => {
     setOpen(false);
   };
 
+  const confirmedTicketsCount = guestList
+    .filter((g) => g.status === "confirmed")
+    .reduce((acc, g) => acc + (g.ticketCount || 0), 0);
+
   return (
     <>
       <Modal
-        loading={creating}
         open={open}
         onCancel={handleCancel}
         styles={{
           body: { maxHeight: 600, overflowY: "auto", paddingRight: 16 },
         }}
         footer={[
-          <Button key="cancel" onClick={handleCancel}>
+          <Button key="cancel" loading={creating} onClick={handleCancel}>
             Cancelar
           </Button>,
-          <Button key="submit" type="primary" onClick={handleSubmit}>
+          <Button
+            key="submit"
+            type="primary"
+            loading={creating}
+            onClick={handleSubmit}
+          >
             Criar e copiar link
           </Button>,
         ]}
@@ -177,13 +211,31 @@ const List = ({ eventId }) => {
       </Modal>
 
       <Space style={{ display: "flex", justifyContent: "space-between" }}>
-        <Button ghost type="primary" onClick={openInvite}>
-          Novo link de convite
-        </Button>
+        <Flex gap={8}>
+          <Button ghost type="primary" onClick={openInvite}>
+            Novo link de convite
+          </Button>
 
-        <Button loading={loading} ghost type="primary" onClick={refresh}>
-          Atualizar lista
-        </Button>
+          <Button loading={loading} ghost type="primary" onClick={refresh}>
+            Atualizar lista
+          </Button>
+        </Flex>
+
+        <Space size="large" style={{ fontWeight: 600, fontSize: 16 }}>
+          <Text>
+            Quantidade de convites: <Text strong>{guestList.length}</Text>
+          </Text>
+          <Text>
+            Senhas criadas:{" "}
+            <Text>
+              {guestList.reduce((acc, g) => acc + (g.maxTicketCount || 0), 0)}
+            </Text>
+          </Text>
+          <Text>
+            Senhas confirmadas:{" "}
+            <Text type="success">{confirmedTicketsCount}</Text>
+          </Text>
+        </Space>
       </Space>
 
       <EditableTable

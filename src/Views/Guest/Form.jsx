@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const { Option } = Select;
 
-export default function GuestForm({ guest, form, handleSubmit }) {
+export default function GuestForm({ guest, form, handleSubmit, loading }) {
   useEffect(() => {
     if (guest) {
       form.setFieldsValue(guest);
@@ -40,6 +40,20 @@ export default function GuestForm({ guest, form, handleSubmit }) {
       </Form.Item>
 
       <Form.Item
+        label="Quantidade de senhas"
+        name="ticketCount"
+        rules={[{ required: true, message: "Escolha a quantidade de senhas" }]}
+      >
+        <Select placeholder="Selecione a quantidade de senhas">
+          {Array.from({ length: guest.maxTicketCount }, (_, index) => (
+            <Select.Option key={index + 1} value={index + 1}>
+              {index + 1}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
+
+      <Form.Item
         label="Status"
         name="status"
         rules={[{ required: true, message: "Escolha seu status" }]}
@@ -52,7 +66,7 @@ export default function GuestForm({ guest, form, handleSubmit }) {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" block>
+        <Button type="primary" htmlType="submit" block loading={loading}>
           Confirmar
         </Button>
       </Form.Item>
@@ -67,7 +81,10 @@ GuestForm.propTypes = {
     phone: PropTypes.string,
     eventId: PropTypes.string,
     status: PropTypes.string,
+    maxTicketCount: PropTypes.number,
+    ticketCount: PropTypes.number,
   }),
   form: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
