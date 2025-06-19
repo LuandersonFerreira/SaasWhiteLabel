@@ -1,9 +1,9 @@
 import { Button, Flex, message, Modal, Space, Tag, Typography } from "antd";
-import EditableTable from "../../../components/Table/EditableTable";
 import React, { useRef } from "react";
 import { useGuest } from "../../../hook/useGuest";
 import dayjs from "dayjs";
 import CreateLinkForm from "./CreateLinkForm";
+import GuestTable from "./GuestTable";
 
 const { Text } = Typography;
 
@@ -70,7 +70,7 @@ const List = ({ eventId }) => {
       },
     },
     {
-      title: "Quantidade de senhas",
+      title: "Quantidade de acompanhantes",
       dataIndex: "maxTicketCount",
       key: "maxTicketCount",
       render: (maxTicketCount, record) =>
@@ -81,10 +81,7 @@ const List = ({ eventId }) => {
       dataIndex: "createdAt",
       key: "createdAt",
       render: (createdAt) => (
-        <>
-          {dayjs(createdAt).add(3, "hour").format("DD/MM/YYYY HH:mm") ||
-            "Não informado"}
-        </>
+        <>{dayjs(createdAt).format("DD/MM/YYYY HH:mm") || "Não informado"}</>
       ),
     },
     {
@@ -93,7 +90,7 @@ const List = ({ eventId }) => {
       key: "lastUpdated",
       render: (lastUpdate) =>
         lastUpdate
-          ? dayjs(lastUpdate).add(3, "hour").format("DD/MM/YYYY HH:mm")
+          ? dayjs(lastUpdate).format("DD/MM/YYYY HH:mm")
           : "Ainda não atualizado",
     },
     {
@@ -132,10 +129,6 @@ const List = ({ eventId }) => {
     //   ),
     // },
   ];
-
-  const handleAction = (record) => {
-    console.log(`Ação: ${record}`);
-  };
 
   const openInvite = async (record) => {
     setOpen(true);
@@ -183,8 +176,8 @@ const List = ({ eventId }) => {
 
   const confirmedTicketsCount = guestList
     ? guestList
-        ?.filter((g) => g.status === "confirmed")
-        ?.reduce((acc, g) => acc + (g.ticketCount || 0), 0)
+        .filter((g) => g.status === "confirmed")
+        .reduce((acc, g) => acc + 1 + (g.ticketCount || 0), 0)
     : 0;
 
   return (
@@ -227,26 +220,15 @@ const List = ({ eventId }) => {
           <Text>
             Quantidade de convites: <Text strong>{guestList?.length}</Text>
           </Text>
+
           <Text>
-            Senhas criadas:{" "}
-            <Text>
-              {guestList?.reduce((acc, g) => acc + (g.maxTicketCount || 0), 0)}
-            </Text>
-          </Text>
-          <Text>
-            Senhas confirmadas:{" "}
+            Pessoas confirmadas:{" "}
             <Text type="success">{confirmedTicketsCount}</Text>
           </Text>
         </Space>
       </Space>
 
-      <EditableTable
-        loading={loading}
-        scroll={{ x: 600 }}
-        columns={columns}
-        dataSource={guestList}
-        onAction={handleAction}
-      />
+      <GuestTable columns={columns} guestList={guestList} loading={loading} />
     </>
   );
 };

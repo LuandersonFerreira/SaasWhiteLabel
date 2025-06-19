@@ -52,23 +52,8 @@ const CreateLinkForm = forwardRef((props, ref) => {
         <Input placeholder="Telefone do convidado" />
       </Form.Item>
 
-      <Form.Item
-        label="Quantidade de senhas"
-        name="maxTicketCount"
-        rules={[{ required: true, message: "Quantidade mínima é 1" }]}
-      >
-        <Input
-          placeholder="Quantidade"
-          type="number"
-          min={1}
-          defaultValue={1}
-          onBlur={() => {
-            const current = form.getFieldValue("maxTicketCount");
-            if (!current || current < 1) {
-              form.setFieldsValue({ maxTicketCount: 1 });
-            }
-          }}
-        />
+      <Form.Item label="Quantidade de acompanhantes" name="maxTicketCount">
+        <Input placeholder="Quantidade" type="number" />
       </Form.Item>
 
       {error && <Text type="danger">{error}</Text>}
