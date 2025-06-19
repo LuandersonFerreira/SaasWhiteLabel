@@ -182,8 +182,10 @@ const List = ({ eventId }) => {
   };
 
   const confirmedTicketsCount = guestList
-    .filter((g) => g.status === "confirmed")
-    .reduce((acc, g) => acc + (g.ticketCount || 0), 0);
+    ? guestList
+        ?.filter((g) => g.status === "confirmed")
+        ?.reduce((acc, g) => acc + (g.ticketCount || 0), 0)
+    : 0;
 
   return (
     <>
