@@ -21,14 +21,8 @@ export default function GuestHome() {
       try {
         const response = await api.get(`/guest?guestId=${guestId}`);
 
-        setGuest({
-          ...response.data,
-          ticketCount: response.data.ticketCount || 1,
-        });
-        form.setFieldsValue({
-          ...response.data,
-          ticketCount: response.data.ticketCount || 1,
-        });
+        setGuest(response.data);
+        form.setFieldsValue(response.data);
       } catch (error) {
         console.error("Erro ao carregar convidado:", error);
       }
