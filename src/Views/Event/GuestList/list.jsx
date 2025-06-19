@@ -225,12 +225,12 @@ const List = ({ eventId }) => {
 
         <Space size="large" style={{ fontWeight: 600, fontSize: 16 }}>
           <Text>
-            Quantidade de convites: <Text strong>{guestList.length}</Text>
+            Quantidade de convites: <Text strong>{guestList?.length}</Text>
           </Text>
           <Text>
             Senhas criadas:{" "}
             <Text>
-              {guestList.reduce((acc, g) => acc + (g.maxTicketCount || 0), 0)}
+              {guestList?.reduce((acc, g) => acc + (g.maxTicketCount || 0), 0)}
             </Text>
           </Text>
           <Text>

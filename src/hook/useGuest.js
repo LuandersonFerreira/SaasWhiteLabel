@@ -3,7 +3,7 @@ import { mockInvites } from "../mock/invites";
 import api from "./api";
 
 export const useGuest = (eventId, useMock = false) => {
-  const [guestList, setGuestList] = useState(null);
+  const [guestList, setGuestList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [creating, setCreating] = useState(false);
