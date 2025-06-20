@@ -73,11 +73,14 @@ export default function GuestForm({ guest, form, handleSubmit, loading }) {
           placeholder="Selecione a quantidade de acompanhantes"
           onChange={handleTicketCountChange}
         >
-          {Array.from({ length: guest.maxTicketCount }, (_, index) => (
-            <Select.Option key={index} value={index}>
-              {index}
-            </Select.Option>
-          ))}
+          {Array.from(
+            { length: guest.maxTicketCount + 1 }, // +1 para incluir o maxTicketCount
+            (_, index) => (
+              <Select.Option key={index} value={index}>
+                {index}
+              </Select.Option>
+            )
+          )}
         </Select>
       </Form.Item>
 
