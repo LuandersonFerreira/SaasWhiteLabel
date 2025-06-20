@@ -20,25 +20,61 @@ export default function CreateEventForm() {
 
   const [form] = Form.useForm();
   const [base64Image, setBase64Image] = useState(null);
+  const [fileList, setFileList] = useState([]);
 
   const { createEvent } = useEvents(null, false);
 
   const handleFileChange = (info) => {
-    const file = info.file.originFileObj;
-    if (!file) return;
+    const { file } = info;
 
-    if (!file.type.startsWith("image/")) {
+    if (file.status === "removed") {
+      setFileList([]);
+      form.setFieldsValue({ banner: null });
+      setBase64Image(null);
+      return;
+    }
+
+    const selectedFile = file.originFileObj;
+    if (!selectedFile) return;
+
+    if (!selectedFile.type.startsWith("image/")) {
       message.error("Por favor, selecione uma imagem válida.");
       return;
     }
+
+    const uploadingFile = {
+      uid: file.uid,
+      name: file.name,
+      status: "uploading",
+    };
+    setFileList([uploadingFile]);
 
     const reader = new FileReader();
     reader.onload = () => {
       const base64 = reader.result.split(",")[1];
       setBase64Image(base64);
-      form.setFieldsValue({ photo: base64 });
+      form.setFieldsValue({ banner: base64 });
+
+      setFileList([
+        {
+          ...uploadingFile,
+          url: reader.result,
+          status: "done",
+        },
+      ]);
     };
-    reader.readAsDataURL(file);
+
+    reader.onerror = () => {
+      message.error("Erro ao ler o arquivo.");
+      setFileList([
+        {
+          ...uploadingFile,
+          status: "error",
+        },
+      ]);
+    };
+
+    reader.readAsDataURL(selectedFile);
   };
 
   const onFinish = async (values) => {
@@ -89,7 +125,7 @@ export default function CreateEventForm() {
         <Form.Item label="Fotos do Evento" name="banner">
           <Upload
             listType="picture"
-            beforeUpload={() => false}
+            fileList={fileList}
             onChange={handleFileChange}
             maxCount={1}
           >
